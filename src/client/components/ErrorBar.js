@@ -51,7 +51,7 @@ class SnackBarWrapper extends React.Component {
         ContentProps={{
           'aria-describedby': 'message-id'
         }}
-        message={<span id='message-id'>{merssage}</span>}
+        message={<span id='message-id'>{message}</span>}
         action={[
           <IconButton
             key='close'
