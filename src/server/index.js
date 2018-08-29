@@ -1,10 +1,9 @@
 const express = require('express')
-const os = require('os')
 
 const app = express()
 app.set('port', (process.env.PORT || 8080))
 
-app.use(express.static('dist'))
+app.use(express.static(__dirname + '/dist'))
 
 app.get('*', (req, res) => {
   res.sendStatus(200)
