@@ -6,13 +6,13 @@ import { Lists, ListItem } from 'components'
 import { LockIcon } from 'components/icons'
 import { withLoader } from 'components/HOC'
 
-const UnlockButton = ({id, _unlock, unlocked}) => {
+const UnlockButton = ({id, _unlock, unlocked, text}) => {
   return (
     <Button
       color='primary'
       onClick={() => _unlock(id)}
     >
-      Actual Unlock
+      {text}
       <ListItemIcon style={{cursor: 'pointer'}}>
         <LockIcon unlocked={unlocked} />
       </ListItemIcon>
@@ -23,7 +23,13 @@ const Locks = ({ locks, _unlock }) => {
   return (
     <Lists>
       {
-        locks.map(({ id, name, unlocked, unlockInProcess }) => (
+        locks.map(({
+          id,
+          name,
+          unlocked,
+          unlockInProcess,
+          unlockFailed
+        }) => (
           <Fragment key={id}>
             <ListItem text={name} button={false}>
               {
@@ -31,6 +37,7 @@ const Locks = ({ locks, _unlock }) => {
                   ? <CircularProgress />
                   : <UnlockButton
                     id={id}
+                    text={unlockFailed ? 'Failed Try Again' : 'Actual Unlock'}
                     _unlock={_unlock}
                     unlocked={unlocked}
                   />

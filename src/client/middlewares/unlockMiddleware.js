@@ -22,7 +22,7 @@ const unlockMiddleware = store => next => action => {
     const newLocks = Object.assign(
       [],
       locks,
-      { [index]: {...locks[index], unlockInProcess: false} }
+      { [index]: {...locks[index], unlockInProcess: false, unlockFailed: true } }
     )
     action.payload.locks = newLocks
     next(action)
@@ -36,7 +36,12 @@ const unlockMiddleware = store => next => action => {
     const newLocks = Object.assign(
       [],
       locks,
-      { [index]: {...locks[index], unlocked: true, unlockInProcess: false} }
+      { [index]: {
+        ...locks[index],
+        unlocked: true,
+        unlockInProcess: false,
+        unlockFailed: false
+      }}
     )
     return next(successLocks(newLocks))
   }
