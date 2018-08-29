@@ -38,7 +38,7 @@ class SnackBarWrapper extends React.Component {
   render () {
     const { classes, error } = this.props
     const len = Array.isArray(error) ? error.length : 0
-    const message = len ? error[len - 1].message : null
+    const message = len ? error[len - 1].reason : null
     return (
       <Snackbar
         anchorOrigin={{
@@ -51,7 +51,7 @@ class SnackBarWrapper extends React.Component {
         ContentProps={{
           'aria-describedby': 'message-id'
         }}
-        message={<span id='message-id'>{message}</span>}
+        message={<span id='message-id'>{merssage}</span>}
         action={[
           <IconButton
             key='close'
