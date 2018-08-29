@@ -3,7 +3,8 @@ import {
   successLocks,
   errorLocks,
   unlock,
-  unlockSuccess
+  unlockSuccess,
+  unlockError
 } from '../action-creator'
 import kisiClient from '../kisi-wrapper'
 
@@ -18,14 +19,16 @@ const _fetchLocks = () => async (dispatch) => {
   }
 }
 
-const _unlock = (id) => async (dispatch) => {
-  dispatch(unlock())
+const _unlock = (id, mock) => async (dispatch) => {
+  dispatch(unlock(id))
   try {
-    const result = await kisiClient.post(`locks/${id}/unlock`, {})
-    console.log(result.data)
+    console.log('mock', mock)
+    if (!mock) {
+      await kisiClient.post(`locks/${id}/unlock`, {})
+    }
+    dispatch(unlockSuccess(id))
   } catch (e) {
-    console.log(e)
-    dispatch(errorLocks(e))
+    dispatch(unlockError(id, e))
   }
 }
 

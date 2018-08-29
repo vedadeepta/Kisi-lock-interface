@@ -1,6 +1,6 @@
 import React, { Fragment } from 'react'
 import { connect } from 'react-redux'
-import { AppBar } from 'components'
+import { AppBar, SnackBar } from 'components'
 import Locks from './Locks'
 
 import { _fetchLocks, _unlock } from 'actions'
@@ -12,11 +12,22 @@ class PLocks extends React.Component {
   }
 
   render () {
-    const { locks, _unlock } = this.props
+    const {
+      locks,
+      error: { reason },
+      pending,
+      _unlock
+    } = this.props
+
     return (
       <Fragment>
         <AppBar title='Locks' />
-        <Locks locks={locks} _unlock={_unlock} />
+        <Locks
+          locks={locks}
+          pending={pending}
+          _unlock={_unlock}
+        />
+        <SnackBar message={reason} />
       </Fragment>
     )
   }
@@ -24,7 +35,9 @@ class PLocks extends React.Component {
 
 const mapStateToProps = (store) => {
   return {
-    locks: store.LocksReducer.locks
+    locks: store.LocksReducer.locks,
+    error: store.LocksReducer.error,
+    pending: store.LocksReducer.pending
   }
 }
 
@@ -33,8 +46,8 @@ const mapDispatchToProps = (dispatch) => {
     _fetchLocks: () => {
       return dispatch(_fetchLocks())
     },
-    _unlock: (id) => {
-      return dispatch(_unlock(id))
+    _unlock: (id, mock) => {
+      return dispatch(_unlock(id, mock))
     }
   }
 }

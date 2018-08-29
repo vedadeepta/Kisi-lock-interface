@@ -2,10 +2,7 @@ import { LOCK_TYPES } from '../types'
 
 const initialState = {
   locks: [],
-  pending: {
-    fetch: false,
-    lockops: false
-  },
+  pending: false,
   error: {}
 }
 
@@ -14,10 +11,7 @@ export default (state = initialState, action) => {
     case LOCK_TYPES.FETCH: {
       return {
         ...state,
-        pending: {
-          ...state.pending,
-          fetch: true
-        }
+        pending: true
       }
     }
 
@@ -25,11 +19,7 @@ export default (state = initialState, action) => {
       return {
         ...state,
         locks: action.payload.locks,
-        pending: {
-          ...state.pending,
-          fetch: false,
-          lockops: false
-        }
+        pending: false
       }
     }
 
@@ -37,21 +27,21 @@ export default (state = initialState, action) => {
       return {
         ...state,
         error: action.payload.error,
-        pending: {
-          ...state.pending,
-          fetch: false,
-          lockops: false
-        }
+        pending: false
       }
     }
 
     case LOCK_TYPES.UNLOCK: {
       return {
         ...state,
-        pending: {
-          ...state.pending,
-          lockops: true
-        }
+        locks: action.payload.locks
+      }
+    }
+
+    case LOCK_TYPES.UNLOCK_ERROR: {
+      return {
+        ...state,
+        locks: action.payload.locks
       }
     }
 

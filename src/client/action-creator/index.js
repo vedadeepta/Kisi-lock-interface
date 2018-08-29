@@ -3,5 +3,6 @@ export {
   successLocks,
   errorLocks,
   unlock,
-  unlockSuccess
+  unlockSuccess,
+  unlockError
 } from './locks'

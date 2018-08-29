@@ -24,18 +24,30 @@ const errorLocks = (error) => {
   }
 }
 
-const unlock = () => {
+const unlock = (id) => {
   return {
-    type: LOCK_TYPES.UNLOCK
+    type: LOCK_TYPES.UNLOCK,
+    payload: {
+      id
+    }
   }
 }
 
-const unlockSuccess = (id, lock) => {
+const unlockSuccess = (id) => {
   return {
     type: LOCK_TYPES.UNLOCK_SUCCESS,
     payload: {
+      id
+    }
+  }
+}
+
+const unlockError = (id, error) => {
+  return {
+    type: LOCK_TYPES.UNLOCK_ERROR,
+    payload: {
       id,
-      lock
+      error
     }
   }
 }
@@ -45,5 +57,6 @@ export {
   successLocks,
   errorLocks,
   unlock,
-  unlockSuccess
+  unlockSuccess,
+  unlockError
 }
