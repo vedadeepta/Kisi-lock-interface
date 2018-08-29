@@ -1,6 +1,6 @@
 import React, { Fragment } from 'react'
 import { connect } from 'react-redux'
-import { AppBar, SnackBar } from 'components'
+import { AppBar, ErrorBar } from 'components'
 import Locks from './Locks'
 
 import { _fetchLocks, _unlock } from 'actions'
@@ -14,7 +14,7 @@ class PLocks extends React.Component {
   render () {
     const {
       locks,
-      error: { reason },
+      error,
       pending,
       _unlock
     } = this.props
@@ -27,7 +27,7 @@ class PLocks extends React.Component {
           pending={pending}
           _unlock={_unlock}
         />
-        <SnackBar message={reason} />
+        <ErrorBar error={error} />
       </Fragment>
     )
   }

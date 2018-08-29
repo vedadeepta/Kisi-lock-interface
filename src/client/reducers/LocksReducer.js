@@ -3,7 +3,7 @@ import { LOCK_TYPES } from '../types'
 const initialState = {
   locks: [],
   pending: false,
-  error: {}
+  error: []
 }
 
 export default (state = initialState, action) => {
@@ -24,9 +24,10 @@ export default (state = initialState, action) => {
     }
 
     case LOCK_TYPES.ERROR: {
+      const { payload: { error } } = action
       return {
         ...state,
-        error: action.payload.error,
+        error: state.error.concat(error),
         pending: false
       }
     }

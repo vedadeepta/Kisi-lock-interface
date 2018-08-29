@@ -15,10 +15,10 @@ const styles = theme => ({
 class SnackBarWrapper extends React.Component {
   state = {
     open: false
-  };
+  }
 
   componentDidUpdate (prevProps) {
-    if (prevProps.message !== this.props.message) {
+    if (prevProps.error.length !== this.props.error.length) {
       this.setState({ open: true })
     }
   }
@@ -36,7 +36,9 @@ class SnackBarWrapper extends React.Component {
   };
 
   render () {
-    const { classes, message } = this.props
+    const { classes, error } = this.props
+    const len = Array.isArray(error) ? error.length : 0
+    const message = len ? error[len - 1].message : null
     return (
       <Snackbar
         anchorOrigin={{
@@ -67,7 +69,8 @@ class SnackBarWrapper extends React.Component {
 }
 
 SnackBarWrapper.propTypes = {
-  classes: PropTypes.object.isRequired
+  classes: PropTypes.object.isRequired,
+  error: PropTypes.array.isRequired
 }
 
 export default withStyles(styles)(SnackBarWrapper)
