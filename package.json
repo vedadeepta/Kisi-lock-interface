@@ -3,6 +3,9 @@
   "version": "1.0.0",
   "description": "",
   "main": "src/server/index.js",
+  "engines": {
+    "node": "9.8.0"
+  },
   "scripts": {
     "start": "node src/server/index.js",
     "build": "webpack --mode production",
