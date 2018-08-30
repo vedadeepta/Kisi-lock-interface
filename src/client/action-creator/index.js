@@ -1,6 +1,7 @@
 export {
   fetchLocks,
   successLocks,
+  mergeLocks,
   errorLocks,
   unlock,
   unlockSuccess,

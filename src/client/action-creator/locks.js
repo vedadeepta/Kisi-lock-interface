@@ -6,9 +6,15 @@ const fetchLocks = () => {
   }
 }
 
-const successLocks = (locks) => {
+const successLocks = () => {
   return {
     type: LOCK_TYPES.SUCCESS,
+  }
+}
+
+const mergeLocks = (locks) => {
+  return {
+    type: LOCK_TYPES.MERGE,
     payload: {
       locks
     }
@@ -55,6 +61,7 @@ const unlockError = (id, error) => {
 export {
   fetchLocks,
   successLocks,
+  mergeLocks,
   errorLocks,
   unlock,
   unlockSuccess,

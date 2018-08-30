@@ -18,8 +18,14 @@ export default (state = initialState, action) => {
     case LOCK_TYPES.SUCCESS: {
       return {
         ...state,
-        locks: action.payload.locks,
         pending: false
+      }
+    }
+
+    case LOCK_TYPES.MERGE: {
+      return {
+        ...state,
+        locks: action.payload.locks
       }
     }
 
@@ -29,20 +35,6 @@ export default (state = initialState, action) => {
         ...state,
         error: state.error.concat(error),
         pending: false
-      }
-    }
-
-    case LOCK_TYPES.UNLOCK: {
-      return {
-        ...state,
-        locks: action.payload.locks
-      }
-    }
-
-    case LOCK_TYPES.UNLOCK_ERROR: {
-      return {
-        ...state,
-        locks: action.payload.locks
       }
     }
 

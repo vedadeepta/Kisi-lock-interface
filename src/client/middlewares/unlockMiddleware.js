@@ -1,7 +1,8 @@
-import { successLocks, errorLocks } from '../action-creator'
+import { mergeLocks, errorLocks } from '../action-creator'
 import { LOCK_TYPES } from '../types'
 
 const unlockMiddleware = store => next => action => {
+  next(action)
   if (action.type === LOCK_TYPES.UNLOCK) {
     const { payload: { id } } = action
     const locks = store.getState().LocksReducer.locks
@@ -11,8 +12,7 @@ const unlockMiddleware = store => next => action => {
       locks,
       { [index]: {...locks[index], unlockInProcess: true} }
     )
-    action.payload.locks = newLocks
-    return next(action)
+    return next(mergeLocks(newLocks))
   }
 
   if (action.type === LOCK_TYPES.UNLOCK_ERROR) {
@@ -22,10 +22,9 @@ const unlockMiddleware = store => next => action => {
     const newLocks = Object.assign(
       [],
       locks,
-      { [index]: {...locks[index], unlockInProcess: false, unlockFailed: true } }
+      { [index]: { ...locks[index], unlockInProcess: false, unlockFailed: true } }
     )
-    action.payload.locks = newLocks
-    next(action)
+    next(mergeLocks(newLocks))
     return next(errorLocks(action.payload.error))
   }
 
@@ -43,10 +42,8 @@ const unlockMiddleware = store => next => action => {
         unlockFailed: false
       }}
     )
-    return next(successLocks(newLocks))
+    return next(mergeLocks(newLocks))
   }
-
-  return next(action)
 }
 
 export default unlockMiddleware

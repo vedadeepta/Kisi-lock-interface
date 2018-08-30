@@ -1,6 +1,7 @@
 import {
   fetchLocks,
   successLocks,
+  mergeLocks,
   errorLocks,
   unlock,
   unlockSuccess,
@@ -12,9 +13,9 @@ const _fetchLocks = () => async (dispatch) => {
   dispatch(fetchLocks())
   try {
     const result = await kisiClient.get('locks')
-    dispatch(successLocks(result.data))
+    dispatch(successLocks())
+    dispatch(mergeLocks(result.data))
   } catch (e) {
-    console.log(e)
     dispatch(errorLocks(e))
   }
 }
